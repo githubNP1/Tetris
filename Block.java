@@ -1,5 +1,6 @@
 package Tetris;
 
+import java.awt.*;
 import java.util.*;
 
 public class Block {
@@ -8,6 +9,8 @@ public class Block {
     int type;
     ArrayList<ArrayList<int[]>> states = new ArrayList<>();
     int state = 0;
+    Color colour;
+    Color shadow;
     
     public Block(int blockType){
         this.type = blockType;
@@ -18,6 +21,8 @@ public class Block {
                 x = 150;
                 y = 70;
                 makeLBlock();
+                colour = Color.red;
+                shadow = new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 10);
                 break;
             case 2:
                 //makeBlock(x, y, x + 60, y + 20);
@@ -25,6 +30,8 @@ public class Block {
                 x = 150;
                 y = 70;
                 makeJBlock();
+                colour = Color.BLUE;
+                shadow = new Color(Color.BLUE.getRed(), Color.BLUE.getGreen(), Color.BLUE.getBlue(), 10);
                 break;
             case 3:
                 //makeBlock(x, y, x + 40, y + 20);
@@ -32,12 +39,16 @@ public class Block {
                 x = 150;
                 y = 70;
                 makeSBlock();
+                colour = Color.GREEN;
+                shadow = new Color(Color.GREEN.getRed(), Color.GREEN.getGreen(), Color.GREEN.getBlue(), 10);
                 break;
             case 4:
                 //makeBlock(x, y, x + 40, y + 40);
                 x = 150;
                 y = 70;
                 makeZBlock();
+                colour = Color.yellow;
+                shadow = new Color(Color.yellow.getRed(), Color.yellow.getGreen(), Color.yellow.getBlue(), 30);
                 break;
             case 5:
                 //makeBlock(x, y, x + 60, y + 20);
@@ -45,18 +56,37 @@ public class Block {
                 x = 150;
                 y = 70;
                 makeTBlock();
+                colour = Color.orange;
+                shadow = new Color(Color.orange.getRed(), Color.orange.getGreen(), Color.orange.getBlue(), 20);
                 break;
             case 6:
                 //makeBlock(x, y, x + 80, y + 20);
                 x = 160;
                 y = 80;
                 makeLongBlock();
+                colour = Color.pink;
+                shadow = new Color(Color.pink.getRed(), Color.pink.getGreen(), Color.pink.getBlue(), 30);
                 break;
             case 7:
                 x = 140;
                 y = 80;
                 makeSquareBlock();
+                colour = Color.black;
+                shadow = new Color(Color.black.getRed(), Color.black.getGreen(), Color.black.getBlue(), 10);
                 break;
+        }
+    }
+    
+    public void floorBlock(){
+        for(ArrayList<int[]> state : states){
+            int lowestPoint = 0;
+            for(int[] coord : state){
+                lowestPoint = coord[1] > lowestPoint ? coord[1] : lowestPoint;
+            }
+            int difference = 499 - lowestPoint;
+            for(int[] coord : state){
+                coord[1] += difference;
+            }
         }
     }
     
